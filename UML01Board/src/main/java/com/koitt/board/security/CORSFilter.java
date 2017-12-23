@@ -15,32 +15,35 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component("corsFilter")
-public class CORSFilter implements Filter{
-
+public class CORSFilter implements Filter {
+	
 	private Logger logger = LogManager.getLogger(this.getClass());
-	
+
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException{
-	}
-	
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-		
+	public void init(FilterConfig filterConfig) 
+			throws ServletException {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest request, 
+			ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		logger.debug("Filtering on ...");
 		HttpServletResponse resp = (HttpServletResponse) response;
 		resp.setHeader("Access-Control-Allow-Origin", "*");
 		resp.setHeader("Access-Control-Allow-Credentials", "true");
-		resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+		resp.setHeader("Access-Control-Allow-Methods", 
+				"GET, POST, PUT, DELETE, OPTIONS");
 		resp.setHeader("Access-Control-Max-Age", "3600");
-		resp.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, "+
-				"Origin, Accept, Access-Control-Request-Method, "+
+		resp.setHeader("Access-Control-Allow-Headers",
+				"X-Requested-With, Content-Type, Authorization, " +
+				"Origin, Accept, Access-Control-Request-Method, " +
 				"Access-Control-Request-Headers");
 		chain.doFilter(request, resp);
 	}
+
+	@Override
+	public void destroy() {
+	}
+
 }
